@@ -19,6 +19,7 @@ import be.vives.jarne.assignment_2.models.MockupToDo
 import be.vives.jarne.assignment_2.models.ToDo
 import be.vives.jarne.assignment_2.models.User
 import be.vives.jarne.assignment_2.ui.theme.Assignment_1Theme
+import be.vives.jarne.assignment_2.utility.Utilities
 
 @Composable
 fun AddEditToDoScreen(
@@ -82,7 +83,6 @@ fun AddEditToDoScreen(
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddEditToDoContent(
     title: String,
@@ -109,13 +109,13 @@ fun AddEditToDoContent(
             .fillMaxSize()
             .padding(16.dp)
             .verticalScroll(rememberScrollState()),
-        verticalArrangement = Arrangement.spacedBy(12.dp)
+        verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
         // Top section: Image & Header
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Start,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
         ) {
             Image(
                 painter = painterResource(id = R.drawable.todo_image),
@@ -149,77 +149,23 @@ fun AddEditToDoContent(
             maxLines = 5
         )
 
-        // Assigned User Dropdown Field
-        var dropdownExpanded by remember { mutableStateOf(false) }
-        ExposedDropdownMenuBox(
-            expanded = dropdownExpanded,
-            onExpandedChange = { dropdownExpanded = !dropdownExpanded },
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            OutlinedTextField(
-                value = selectedUser?.let { "${it.firstName} ${it.lastName}" } ?: "Select User (Optional)",
-                onValueChange = {},
-                readOnly = true,
-                label = { Text("Assign To") },
-                trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = dropdownExpanded) },
-                colors = ExposedDropdownMenuDefaults.outlinedTextFieldColors(),
-                modifier = Modifier
-                    .menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable, enabled = true)
-                    .fillMaxWidth()
-            )
-            ExposedDropdownMenu(
-                expanded = dropdownExpanded,
-                onDismissRequest = { dropdownExpanded = false }
-            ) {
-                DropdownMenuItem(
-                    text = { Text("Select User (Optional)") },
-                    onClick = {
-                        onUserSelected(null)
-                        dropdownExpanded = false
-                    }
-                )
-                users.forEach { user ->
-                    DropdownMenuItem(
-                        text = { Text("${user.firstName} ${user.lastName}") },
-                        onClick = {
-                            onUserSelected(user)
-                            dropdownExpanded = false
-                        }
-                    )
-                }
-            }
-        }
-
-        // Progress Section
-        Text(
-            text = "Progress:",
-            fontSize = 18.sp,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(top = 8.dp)
+        // Assigned User Dropdown Field (reusable utility component in Utilities object)
+        Utilities.UserDropdown(
+            users = users,
+            selectedUser = selectedUser,
+            onUserSelected = onUserSelected
         )
 
-        SwitchRow(
-            label = "Analysis Done",
-            checked = analysisDone,
-            onCheckedChange = onAnalysisDoneChange
-        )
-
-        SwitchRow(
-            label = "Development Done",
-            checked = developmentDone,
-            onCheckedChange = onDevelopmentDoneChange
-        )
-
-        SwitchRow(
-            label = "Review & Testing Done",
-            checked = reviewAndTestingDone,
-            onCheckedChange = onReviewAndTestingDoneChange
-        )
-
-        SwitchRow(
-            label = "Acceptance Done",
-            checked = acceptanceDone,
-            onCheckedChange = onAcceptanceDoneChange
+        // Progress Section (reusable utility component in Utilities object)
+        Utilities.ToDoProgressSection(
+            analysisDone = analysisDone,
+            developmentDone = developmentDone,
+            reviewAndTestingDone = reviewAndTestingDone,
+            acceptanceDone = acceptanceDone,
+            onAnalysisDoneChange = onAnalysisDoneChange,
+            onDevelopmentDoneChange = onDevelopmentDoneChange,
+            onReviewAndTestingDoneChange = onReviewAndTestingDoneChange,
+            onAcceptanceDoneChange = onAcceptanceDoneChange
         )
 
         // Action Buttons (Cancel & Save)
@@ -244,28 +190,6 @@ fun AddEditToDoContent(
                 Text("Save")
             }
         }
-    }
-}
-
-@Composable
-private fun SwitchRow(
-    label: String,
-    checked: Boolean,
-    onCheckedChange: (Boolean) -> Unit
-) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween,
-        modifier = Modifier.fillMaxWidth()
-    ) {
-        Text(
-            text = label,
-            fontSize = 16.sp
-        )
-        Switch(
-            checked = checked,
-            onCheckedChange = onCheckedChange
-        )
     }
 }
 
