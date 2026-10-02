@@ -24,6 +24,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import be.vives.jarne.assignment_2.models.MockupToDo
 import be.vives.jarne.assignment_2.models.ToDo
+import be.vives.jarne.assignment_2.ui.screens.AddEditToDoScreen
 import be.vives.jarne.assignment_2.ui.theme.Assignment_1Theme
 import java.util.Locale
 
@@ -34,9 +35,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             Assignment_1Theme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    val toDo = MockupToDo.getToDos().first()
-                    MyToDoLayout(
-                        toDo = toDo,
+                    AddEditToDoScreen(
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
