@@ -18,7 +18,7 @@ object MockupToDo {
             ToDo(
                 1,
                 "Finish detail ToDo",
-                "Add extra fields like assigned user, time estamated, ... to the ToDo detail screen",
+                "Add extra fields like assigned user, time estimated, ...to the ToDo detail screen",
                 users[1],
                 Date(),
                 users[0],

@@ -18,11 +18,11 @@ data class ToDo(
     var analysisDone: Boolean = false,
     var developmentDone: Boolean = false,
     var reviewAndTestingDone: Boolean = false,
-    var acceptanceDone: Boolean = false
+    var acceptanceDone: Boolean = false,
 ) {
     val status: Status
         get() {
-            return if (assignedToUser != null && finishedOnDate != null) {
+            return if ((assignedToUser != null) && (finishedOnDate != null)) {
                 Status.FINISHED
             } else if (assignedToUser != null) {
                 Status.ASSIGNED
@@ -38,14 +38,14 @@ data class ToDo(
             Status.FINISHED -> "Finished"
         }
 
-    val timeRemaining: Int
+    val timeRemaining: Double
         get() {
             return when {
-                acceptanceDone -> 0
-                reviewAndTestingDone -> (timeEstimated * 0.10).toInt()
-                developmentDone -> (timeEstimated * 0.30).toInt()
-                analysisDone -> (timeEstimated * 0.85).toInt()
-                else -> timeEstimated
+                acceptanceDone -> 0.0
+                reviewAndTestingDone -> timeEstimated * 0.10
+                developmentDone -> timeEstimated * 0.30
+                analysisDone -> timeEstimated * 0.85
+                else -> timeEstimated.toDouble()
             }
         }
 }
