@@ -8,8 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
-import be.vives.jarne.assignment_2.models.MockupToDo
-import be.vives.jarne.assignment_2.ui.ToDetailScreen
+import be.vives.jarne.assignment_2.ui.AddEditToDoScreen
 import be.vives.jarne.assignment_2.ui.theme.Assignment_2Theme
 
 class MainActivity : ComponentActivity() {
@@ -19,9 +18,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             Assignment_2Theme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    val toDo = MockupToDo.getToDos().first()
-                    ToDetailScreen(
-                        toDo = toDo,
+                    AddEditToDoScreen(
                         modifier = Modifier.padding(innerPadding)
                     )
                 }

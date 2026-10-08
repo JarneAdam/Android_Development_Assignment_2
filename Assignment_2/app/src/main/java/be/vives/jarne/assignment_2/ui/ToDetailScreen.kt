@@ -6,15 +6,12 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -23,7 +20,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
@@ -92,9 +88,9 @@ fun ToDetailScreen(toDo: ToDo, modifier: Modifier = Modifier) {
         )
 
         val assignedUserText = if (toDo.assignedToUser != null) {
-            "Assigned to ${toDo.assignedToUser?.firstName} ${toDo.assignedToUser?.lastName}"
+            "Assigned to ${Utility.getUserDisplayName(toDo.assignedToUser)}"
         } else {
-            "Not assigned yet"
+            Utility.getUserDisplayName(null, "Not assigned yet")
         }
         Text(
             text = assignedUserText,
@@ -123,37 +119,14 @@ fun ToDetailScreen(toDo: ToDo, modifier: Modifier = Modifier) {
                 .border(1.dp, Color.Gray, shape = RoundedCornerShape(8.dp))
                 .padding(16.dp),
         ) {
-            Column {
+            Column(
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
                 SwitchRow(label = "Analysis done?", checked = toDo.analysisDone)
                 SwitchRow(label = "Development done?", checked = toDo.developmentDone)
                 SwitchRow(label = "Review & testing done?", checked = toDo.reviewAndTestingDone)
                 SwitchRow(label = "Acceptance done?", checked = toDo.acceptanceDone)
             }
-        }
-    }
-}
-
-@Composable
-fun SwitchRow(label: String, checked: Boolean) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.Center,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 8.dp),
-    ) {
-        Text(
-            text = label,
-            fontSize = 18.sp,
-            modifier = Modifier.weight(1.5f),
-            textAlign = TextAlign.End,
-        )
-        Spacer(modifier = Modifier.width(12.dp))
-        Box(
-            modifier = Modifier.weight(1f),
-            contentAlignment = Alignment.CenterStart,
-        ) {
-            Switch(checked = checked, onCheckedChange = null)
         }
     }
 }
