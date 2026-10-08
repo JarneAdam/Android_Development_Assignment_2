@@ -32,7 +32,7 @@ import androidx.compose.ui.unit.sp
 import be.vives.jarne.assignment_2.R
 import be.vives.jarne.assignment_2.models.MockupToDo
 import be.vives.jarne.assignment_2.models.ToDo
-import be.vives.jarne.assignment_2.ui.theme.Assignment_1Theme
+import be.vives.jarne.assignment_2.ui.theme.Assignment_2Theme
 import be.vives.jarne.assignment_2.utility.Utility
 
 @Composable
@@ -168,7 +168,7 @@ class ToDoPreviewParameterProvider : PreviewParameterProvider<ToDo> {
 fun ToDetailScreenPreview(
     @PreviewParameter(ToDoPreviewParameterProvider::class, limit = 3) toDo: ToDo,
 ) {
-    Assignment_1Theme {
+    Assignment_2Theme {
         ToDetailScreen(toDo)
     }
 }
