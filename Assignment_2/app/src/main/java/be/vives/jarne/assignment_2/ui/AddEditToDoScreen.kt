@@ -23,13 +23,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import be.vives.jarne.assignment_2.models.MockupToDo
 import be.vives.jarne.assignment_2.models.ToDo
 import be.vives.jarne.assignment_2.models.User
-import be.vives.jarne.assignment_2.ui.theme.Assignment_2Theme
 
 /**
  * Stateful screen component managing ToDo editing state.
@@ -192,13 +190,5 @@ fun AddEditToDoContent(
                 Text("Save")
             }
         }
-    }
-}
-
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun AddEditToDoScreenPreview() {
-    Assignment_2Theme {
-        AddEditToDoScreen()
     }
 }
